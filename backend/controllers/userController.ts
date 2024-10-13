@@ -51,6 +51,44 @@ export const register = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+
+export const login = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body;
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    // Check if the user exists
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+      return; // Exit after sending the response
+    }
+
+    // Send success response with user data (excluding password for security)
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: {
+        email: user.email,
+        password: user.password,
+      },
+    });
+  } catch (error: any) {
+    console.error(error);
+    
+    // Send error response
+    res.status(500).json({
+      success: false,
+      message: "Error while logging in",
+      error: error.message,
+    });
+  }
+};
+
 // module.exports = {
 //   getUsers,
 //   register,

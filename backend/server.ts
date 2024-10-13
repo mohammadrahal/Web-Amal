@@ -11,14 +11,14 @@ app.use(cors());
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 8000;
 import userRoutes from './routes/userRoute';
+import courseRoutes from './routes/courseRoute';
 
 
 
 
 
-
-app.use('/v0', userRoutes);
-
+app.use('/api', userRoutes);
+app.use('/api', courseRoutes);
 
 
 
